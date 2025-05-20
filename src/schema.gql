@@ -34,17 +34,14 @@ type Mutation {
 }
 
 input CreateTeacherInput {
-  """Example field (placeholder)"""
-  id: Int!
-
   """ismi"""
-  name: String!
+  name: String
 
   """email"""
   email: String!
 
   """phone number"""
-  phoneNumber: String!
+  phoneNumber: String
 
   """necha yillik malakasi bor"""
   experience: String!
@@ -54,9 +51,6 @@ input CreateTeacherInput {
 }
 
 input UpdateTeacherInput {
-  """Example field (placeholder)"""
-  id: Int
-
   """ismi"""
   name: String
 

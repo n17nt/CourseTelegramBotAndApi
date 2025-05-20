@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { TeachersService } from './teachers.service';
-import { Teacher} from './entities/teachers.model';
+import { Teacher } from './entities/teachers.model';
 import { CreateTeacherInput } from './dto/create-teacher.input';
 import { UpdateTeacherInput } from './dto/update-teacher.input';
 
@@ -9,7 +9,9 @@ export class TeachersResolver {
   constructor(private readonly teachersService: TeachersService) {}
 
   @Mutation(() => Teacher)
-  createTeacher(@Args('createTeacherInput') createTeacherInput: CreateTeacherInput) {
+  createTeacher(
+    @Args('createTeacherInput') createTeacherInput: CreateTeacherInput,
+  ) {
     return this.teachersService.create(createTeacherInput);
   }
 
@@ -24,8 +26,10 @@ export class TeachersResolver {
   }
 
   @Mutation(() => Teacher)
-  updateTeacher(@Args('updateTeacherInput') updateTeacherInput: UpdateTeacherInput) {
-    return this.teachersService.update(updateTeacherInput.id, updateTeacherInput);
+  updateTeacher(
+    @Args('updateTeacherInput') updateTeacherInput: UpdateTeacherInput,
+  ) {
+    return this.teachersService.update(1, updateTeacherInput);
   }
 
   @Mutation(() => Teacher)
