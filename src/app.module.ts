@@ -4,16 +4,32 @@ import { AppService } from './app.service';
 import { TelegramModule } from './telegram/telegram.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { CourseModule } from './course/course.module';
+import { TeacherModel } from './teachers/entities/teacher.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TeachersModule } from './teachers/teachers.module';
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot({
+      database: 'courses_db',
+      host: 'localhost',
+      type: 'postgres',
+      password: '1234',
+      username: 'postgres',
+      port: 5432,
+      autoLoadEntities: true,
+      synchronize: true,
+      entities: [TeacherModel],
+    }),
     TelegramModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: './src/schem.gql',
+      playground: true,
+      graphiql: true,
+      autoSchemaFile: './src/schema.gql',
     }),
-    CourseModule,
+    TelegramModule,
+    TeachersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
