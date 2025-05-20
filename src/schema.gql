@@ -1,0 +1,74 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Teacher {
+  """Example field (placeholder)"""
+  id: Int!
+
+  """ismi"""
+  name: String!
+
+  """email"""
+  email: String!
+
+  """phone number"""
+  phoneNumber: String!
+
+  """necha yillik malakasi bor"""
+  experience: String!
+
+  """diplommi"""
+  diploma: String!
+}
+
+type Query {
+  teachers: [Teacher!]!
+  teacher(id: Int!): Teacher!
+}
+
+type Mutation {
+  createTeacher(createTeacherInput: CreateTeacherInput!): Teacher!
+  updateTeacher(updateTeacherInput: UpdateTeacherInput!): Teacher!
+  removeTeacher(id: Int!): Teacher!
+}
+
+input CreateTeacherInput {
+  """Example field (placeholder)"""
+  id: Int!
+
+  """ismi"""
+  name: String!
+
+  """email"""
+  email: String!
+
+  """phone number"""
+  phoneNumber: String!
+
+  """necha yillik malakasi bor"""
+  experience: String!
+
+  """diplommi"""
+  diploma: String!
+}
+
+input UpdateTeacherInput {
+  """Example field (placeholder)"""
+  id: Int
+
+  """ismi"""
+  name: String
+
+  """email"""
+  email: String
+
+  """phone number"""
+  phoneNumber: String
+
+  """necha yillik malakasi bor"""
+  experience: String
+
+  """diplommi"""
+  diploma: String
+}
