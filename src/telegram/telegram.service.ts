@@ -7,7 +7,7 @@ import {
   ConversationFlavor,
 } from '@grammyjs/conversations';
 
-interface MyContext extends Context, ConversationFlavor<Context> {}
+interface MyContext extends Context, ConversationFlavor<Context> { }
 
 @Injectable()
 export class TelegramService implements OnModuleInit {
@@ -20,8 +20,8 @@ export class TelegramService implements OnModuleInit {
     this.bot.use(createConversation(this.apply));
 
     this.bot.command('start', async (ctx) => {
-      await ctx.reply(
-        `🎓 Assalomu alaykum, ${ctx.from.first_name || 'do‘st'}!
+  await ctx.replyWithPhoto('https://api.logobank.uz/media/logos_png/Najot_Talim-01.png', {
+    caption: `🎓 Assalomu alaykum, ${ctx.from.first_name || 'do‘st'}!
 Siz *Najot Ta'lim* o‘quv markazining rasmiy botiga xush kelibsiz! 🤖
 
 📚 Bu yerda siz:
@@ -31,15 +31,14 @@ Siz *Najot Ta'lim* o‘quv markazining rasmiy botiga xush kelibsiz! 🤖
 ✅ Dars jadvalini ko‘rasiz
 
 🚀 Quyidagi tugmalardan birini tanlang:`,
-        {
-          reply_markup: new Keyboard()
-            .text("📝 Ro'yxatdan o'tish")
-            .text("📍 O'quv markazlari")
-            .resized(),
-          parse_mode: 'Markdown',
-        },
-      );
-    });
+    parse_mode: 'Markdown',
+    reply_markup: new Keyboard()
+      .text("📝 Ro'yxatdan o'tish")
+      .text("📍 O'quv markazlari")
+      .resized(),
+  });
+});
+
 
     this.bot.hears("📝 Ro'yxatdan o'tish", async (ctx) => {
       await ctx.conversation.enter('apply');
@@ -64,6 +63,7 @@ Siz *Najot Ta'lim* o‘quv markazining rasmiy botiga xush kelibsiz! 🤖
         `📍 *Yunusobod filiali*\n\nManzil: Yunusobod 5-mavze, 12-uy\nMo‘ljal: “Yunusobod savdo markazi” yonida\n📞 Tel: +998 71 200 00 00`,
         { parse_mode: 'Markdown' },
       );
+      await ctx.replyWithLocation(41.3375, 69.3340);
     });
 
     this.bot.hears('📍 Chilonzor', async (ctx) => {
@@ -71,6 +71,7 @@ Siz *Najot Ta'lim* o‘quv markazining rasmiy botiga xush kelibsiz! 🤖
         `📍 *Chilonzor filiali*\n\nManzil: Chilonzor 18-kvartal, 25-uy\nMo‘ljal: “Chilonzor metro” yaqinida\n📞 Tel: +998 71 200 11 11`,
         { parse_mode: 'Markdown' },
       );
+      await ctx.replyWithLocation(41.3010, 69.2189);
     });
 
     this.bot.hears('📍 Mirobod', async (ctx) => {
@@ -78,6 +79,7 @@ Siz *Najot Ta'lim* o‘quv markazining rasmiy botiga xush kelibsiz! 🤖
         `📍 *Mirobod filiali*\n\nManzil: Mirobod ko‘chasi, 45-uy\nMo‘ljal: “Mirobod Bozori” qarshisida\n📞 Tel: +998 71 200 22 22`,
         { parse_mode: 'Markdown' },
       );
+      await ctx.replyWithLocation(41.3210, 69.2820);
     });
 
     this.bot.hears('📍 Sergeli', async (ctx) => {
@@ -85,6 +87,7 @@ Siz *Najot Ta'lim* o‘quv markazining rasmiy botiga xush kelibsiz! 🤖
         `📍 *Sergeli filiali*\n\nManzil: Sergeli 7A, 10-uy\nMo‘ljal: “Makro Supermarket” yonida\n📞 Tel: +998 71 200 33 33`,
         { parse_mode: 'Markdown' },
       );
+      await ctx.replyWithLocation(41.3040, 69.2540);
     });
 
     this.bot.hears('🔙 Ortga', async (ctx) => {
