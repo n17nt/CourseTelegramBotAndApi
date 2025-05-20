@@ -1,5 +1,5 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { Bot, Context } from 'grammy';
+import { Bot, Context, Keyboard } from 'grammy';
 import {
   conversations,
   createConversation,
@@ -19,14 +19,81 @@ export class TelegramService implements OnModuleInit {
     this.bot.use(conversations());
     this.bot.use(createConversation(this.apply));
 
-    // Bu yerda conversation ni bot.use orqali nom bilan ro'yxatga olish kerak
-    // this.bot.use(createConversation(this.applyConversation));
-    // this.bot.conversations = new Map([['apply', this.applyConversation]]);
-
     this.bot.command('start', async (ctx) => {
       await ctx.reply(
-        '🤖 Botga xush kelibsiz! Ariza uchun /apply buyrug‘ini yuboring.',
+        `🎓 Assalomu alaykum, ${ctx.from.first_name || 'do‘st'}!
+Siz *Najot Ta'lim* o‘quv markazining rasmiy botiga xush kelibsiz! 🤖
+
+📚 Bu yerda siz:
+✅ Kurslar haqida to‘liq ma’lumot olasiz
+✅ Ro‘yxatdan o‘tishingiz mumkin
+✅ Ustozlarimiz bilan tanishasiz
+✅ Dars jadvalini ko‘rasiz
+
+🚀 Quyidagi tugmalardan birini tanlang:`,
+        {
+          reply_markup: new Keyboard()
+            .text("📝 Ro'yxatdan o'tish")
+            .text("📍 O'quv markazlari")
+            .resized(),
+          parse_mode: 'Markdown',
+        },
       );
+    });
+
+    this.bot.hears("📝 Ro'yxatdan o'tish", async (ctx) => {
+      await ctx.conversation.enter('apply');
+    });
+
+    this.bot.hears("📍 O'quv markazlari", async (ctx) => {
+      await ctx.reply("Qaysi filial haqida ma'lumot kerak?", {
+        reply_markup: new Keyboard()
+          .text('📍 Yunusobod')
+          .text('📍 Chilonzor')
+          .row()
+          .text('📍 Mirobod')
+          .text('📍 Sergeli')
+          .row()
+          .text('🔙 Ortga')
+          .resized(),
+      });
+    });
+
+    this.bot.hears('📍 Yunusobod', async (ctx) => {
+      await ctx.reply(
+        `📍 *Yunusobod filiali*\n\nManzil: Yunusobod 5-mavze, 12-uy\nMo‘ljal: “Yunusobod savdo markazi” yonida\n📞 Tel: +998 71 200 00 00`,
+        { parse_mode: 'Markdown' },
+      );
+    });
+
+    this.bot.hears('📍 Chilonzor', async (ctx) => {
+      await ctx.reply(
+        `📍 *Chilonzor filiali*\n\nManzil: Chilonzor 18-kvartal, 25-uy\nMo‘ljal: “Chilonzor metro” yaqinida\n📞 Tel: +998 71 200 11 11`,
+        { parse_mode: 'Markdown' },
+      );
+    });
+
+    this.bot.hears('📍 Mirobod', async (ctx) => {
+      await ctx.reply(
+        `📍 *Mirobod filiali*\n\nManzil: Mirobod ko‘chasi, 45-uy\nMo‘ljal: “Mirobod Bozori” qarshisida\n📞 Tel: +998 71 200 22 22`,
+        { parse_mode: 'Markdown' },
+      );
+    });
+
+    this.bot.hears('📍 Sergeli', async (ctx) => {
+      await ctx.reply(
+        `📍 *Sergeli filiali*\n\nManzil: Sergeli 7A, 10-uy\nMo‘ljal: “Makro Supermarket” yonida\n📞 Tel: +998 71 200 33 33`,
+        { parse_mode: 'Markdown' },
+      );
+    });
+
+    this.bot.hears('🔙 Ortga', async (ctx) => {
+      await ctx.reply("Asosiy menyu", {
+        reply_markup: new Keyboard()
+          .text("📝 Ro'yxatdan o'tish")
+          .text("📍 O'quv markazlari")
+          .resized(),
+      });
     });
 
     this.bot.command('apply', async (ctx) => {
@@ -35,6 +102,7 @@ export class TelegramService implements OnModuleInit {
 
     this.bot.start();
   }
+
   private async apply(conversation: Conversation<MyContext>, ctx: MyContext) {
     await ctx.reply('Ismingizni kiriting:');
     const name = await conversation.waitFor('message:text');

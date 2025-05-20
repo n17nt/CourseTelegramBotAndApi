@@ -1,0 +1,8 @@
+{
+  "name": "Abubakr",
+  "phone": "998913553122",
+  "course": "mobile",
+  "userId": 5052267021,
+  "username": "AbdugaffarovAbubakr",
+  "date": "2025-05-20T14:26:48.684Z"
+},
