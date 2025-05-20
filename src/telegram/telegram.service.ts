@@ -1,19 +1,15 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { Bot, Context, InlineKeyboard, Keyboard } from 'grammy';
+import { Bot, Context, Keyboard } from 'grammy';
 import {
   conversations,
   createConversation,
   Conversation,
   ConversationFlavor,
 } from '@grammyjs/conversations';
-import { ApplyService } from './apply.service';
 import { log } from 'console';
 import { ApplicationService } from 'src/application/application.service';
 
 interface MyContext extends Context, ConversationFlavor<Context> {}
-const starttext = ['Kurslar', 'Kursga yozilish'];
-const btn = starttext.map((btn) => [Keyboard.text(btn)]);
-const start = Keyboard.from(btn).resized();
 
 @Injectable()
 export class TelegramService implements OnModuleInit {

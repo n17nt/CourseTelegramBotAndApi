@@ -1,8 +1,7 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ProjectInfoService } from './project-info.service';
 import { ProjectInfo } from './entities/project-info.entity';
 import { CreateProjectInfoInput } from './dto/create-project-info.input';
-import { UpdateProjectInfoInput } from './dto/update-project-info.input';
 
 @Resolver(() => ProjectInfo)
 export class ProjectInfoResolver {
