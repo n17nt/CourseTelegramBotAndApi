@@ -1,0 +1,14 @@
+import { Module } from '@nestjs/common';
+import { CoursesService } from './courses.service';
+import { CoursesResolver } from './courses.resolver';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Course } from './entities/course.entity';
+
+@Module({
+  imports: [TypeOrmModule.forFeature([Course])],
+  providers: [CoursesResolver, CoursesService],
+})
+export class CoursesModule {}

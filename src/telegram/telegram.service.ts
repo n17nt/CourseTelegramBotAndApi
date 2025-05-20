@@ -47,6 +47,11 @@ export class TelegramService implements OnModuleInit {
 
     await ctx.reply(
       `✅ Arizangiz qabul qilindi:\n👤 Ism: ${name.message.text}\n📞 Telefon: ${phone.message.text}\n📘 Kurs: ${course.message.text}`,
+      {
+        reply_markup: {
+          inline_keyboard: [[{ text: 'someom', callback_data: 'hehe' }]],
+        },
+      },
     );
   }
 }
