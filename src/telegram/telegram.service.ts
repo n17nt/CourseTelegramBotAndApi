@@ -12,6 +12,7 @@ interface MyContext extends Context, ConversationFlavor<Context> {}
 @Injectable()
 export class TelegramService implements OnModuleInit {
   private bot: Bot<MyContext>;
+  projectInfoService: any;
 
   onModuleInit() {
     this.bot = new Bot<MyContext>(process.env.TELEGRAM_BOT_TOKEN);
@@ -44,6 +45,14 @@ export class TelegramService implements OnModuleInit {
 
     await ctx.reply('Qaysi kursga yozilmoqchisiz?');
     const course = await conversation.waitFor('message:text');
+
+    // 
+    await this.projectInfoService.create({
+      fullname: name.message.text,
+      phone: phone.message.text,
+      courseName: course.message.text,
+    });
+    // 
 
     await ctx.reply(
       `✅ Arizangiz qabul qilindi:\n👤 Ism: ${name.message.text}\n📞 Telefon: ${phone.message.text}\n📘 Kurs: ${course.message.text}`,

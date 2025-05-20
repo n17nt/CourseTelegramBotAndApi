@@ -1,0 +1,24 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ProjectInfo {
+  id: ID!
+  fullname: String!
+  phone: String!
+  courseName: String!
+}
+
+type Query {
+  projectInfo: [ProjectInfo!]!
+}
+
+type Mutation {
+  createProjectInfo(createProjectInfoInput: CreateProjectInfoInput!): ProjectInfo!
+}
+
+input CreateProjectInfoInput {
+  fullname: String!
+  phone: String!
+  courseName: String!
+}
