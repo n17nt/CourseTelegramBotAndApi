@@ -8,6 +8,7 @@ import { TelegramModule } from './telegram/telegram.module';
 import { TeacherModel } from './teachers/entities/teacher.entity';
 import { TeachersModule } from './teachers/teachers.module';
 import { ApplicationModule } from './application/application.module';
+import { ProjectInfoModule } from './project-info/project-info.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { ApplicationModule } from './application/application.module';
     TelegramModule,
     TeachersModule,
     ApplicationModule,
+    ProjectInfoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

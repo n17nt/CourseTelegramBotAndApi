@@ -18,6 +18,7 @@ const start = Keyboard.from(btn).resized();
 @Injectable()
 export class TelegramService implements OnModuleInit {
   private bot: Bot<MyContext>;
+  projectInfoService: any;
 
   constructor(private readonly applyService: ApplicationService) {}
 

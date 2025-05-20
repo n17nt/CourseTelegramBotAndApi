@@ -29,10 +29,18 @@ type Teacher {
   diploma: String!
 }
 
+type ProjectInfo {
+  id: ID!
+  fullname: String!
+  phone: String!
+  courseName: String!
+}
+
 type Query {
   application: [Application!]!
   teachers: [Teacher!]!
   teacher(id: Int!): Teacher!
+  projectInfo: [ProjectInfo!]!
 }
 
 type Mutation {
@@ -40,6 +48,7 @@ type Mutation {
   createTeacher(createTeacherInput: CreateTeacherInput!): Teacher!
   updateTeacher(updateTeacherInput: UpdateTeacherInput!): Teacher!
   removeTeacher(id: Int!): Teacher!
+  createProjectInfo(createProjectInfoInput: CreateProjectInfoInput!): ProjectInfo!
 }
 
 input CreateApplicationInput {
@@ -81,4 +90,10 @@ input UpdateTeacherInput {
 
   """diplommi"""
   diploma: String
+}
+
+input CreateProjectInfoInput {
+  fullname: String!
+  phone: String!
+  courseName: String!
 }
