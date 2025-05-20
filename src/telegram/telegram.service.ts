@@ -1,23 +1,37 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { Bot, Context, Keyboard } from 'grammy';
+import { Bot, Context, InlineKeyboard, Keyboard } from 'grammy';
 import {
   conversations,
   createConversation,
   Conversation,
   ConversationFlavor,
 } from '@grammyjs/conversations';
+import { ApplyService } from './apply.service';
+import { log } from 'console';
+import { ApplicationService } from 'src/application/application.service';
 
 interface MyContext extends Context, ConversationFlavor<Context> {}
+const starttext = ['Kurslar', 'Kursga yozilish'];
+const btn = starttext.map((btn) => [Keyboard.text(btn)]);
+const start = Keyboard.from(btn).resized();
 
 @Injectable()
 export class TelegramService implements OnModuleInit {
   private bot: Bot<MyContext>;
 
+  constructor(private readonly applyService: ApplicationService) {}
+
   onModuleInit() {
     this.bot = new Bot<MyContext>(process.env.TELEGRAM_BOT_TOKEN);
 
     this.bot.use(conversations());
-    this.bot.use(createConversation(this.apply));
+    this.bot.use(
+      createConversation(
+        (conversation: Conversation<MyContext>, ctx: MyContext) =>
+          this.apply(conversation, ctx),
+        'apply',
+      ),
+    );
 
     this.bot.command('start', async (ctx) => {
       await ctx.replyWithPhoto(
@@ -40,6 +54,14 @@ Siz *Najot Ta'lim* o‘quv markazining rasmiy botiga xush kelibsiz! 🤖
             .resized(),
         },
       );
+    });
+
+    this.bot.callbackQuery('apply', async (ctx) => {
+      await ctx.conversation.enter('apply');
+    });
+
+    this.bot.hears('Kursga yozilish', async (ctx) => {
+      await ctx.conversation.enter('apply');
     });
 
     this.bot.hears("📝 Ro'yxatdan o'tish", async (ctx) => {
@@ -118,6 +140,22 @@ Siz *Najot Ta'lim* o‘quv markazining rasmiy botiga xush kelibsiz! 🤖
     await ctx.reply('Qaysi kursga yozilmoqchisiz?');
     const course = await conversation.waitFor('message:text');
 
+    log({
+      name: name.message.text,
+      phone: phone.message.text,
+      course: course.message.text,
+    });
+    // this.applyService.saveApplication({
+    //   name: name.message.text,
+    //   phone: phone.message.text,
+    //   course: course.message.text,
+    // });
+    //
+    this.applyService.create({
+      name: name.message.text,
+      phone: phone.message.text,
+      address: course.message.text,
+    });
     await ctx.reply(
       `✅ Arizangiz qabul qilindi:\n👤 Ism: ${name.message.text}\n📞 Telefon: ${phone.message.text}\n📘 Kurs: ${course.message.text}`,
     );

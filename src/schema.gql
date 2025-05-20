@@ -2,6 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Application {
+  id: String!
+  name: String!
+  address: String!
+  phone: String!
+}
+
 type Teacher {
   """Example field (placeholder)"""
   id: Int!
@@ -22,24 +29,24 @@ type Teacher {
   diploma: String!
 }
 
-type Application {
-  id: String!
-  name: String!
-  address: String!
-  phone: String!
-}
-
 type Query {
+  application: [Application!]!
   teachers: [Teacher!]!
   teacher(id: Int!): Teacher!
-  application: [Application!]!
 }
 
 type Mutation {
+  createApplication(createApplicationInput: CreateApplicationInput!): Application!
   createTeacher(createTeacherInput: CreateTeacherInput!): Teacher!
   updateTeacher(updateTeacherInput: UpdateTeacherInput!): Teacher!
   removeTeacher(id: Int!): Teacher!
-  createApplication(createApplicationInput: CreateApplicationInput!): Application!
+}
+
+input CreateApplicationInput {
+  """Example field (placeholder)"""
+  name: String!
+  address: String!
+  phone: String!
 }
 
 input CreateTeacherInput {
@@ -74,11 +81,4 @@ input UpdateTeacherInput {
 
   """diplommi"""
   diploma: String
-}
-
-input CreateApplicationInput {
-  """Example field (placeholder)"""
-  name: String!
-  address: String!
-  phone: String!
 }
