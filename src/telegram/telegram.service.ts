@@ -26,7 +26,13 @@ export class TelegramService implements OnModuleInit {
     );
 
     this.bot.use(conversations());
-    this.bot.use(createConversation(this.apply));
+    this.bot.use(
+      createConversation(
+        (conversation: Conversation<MyContext>, ctx: MyContext) =>
+          this.apply(conversation, ctx),
+        'apply',
+      ),
+    );
     console.log(this.applyService.hello());
 
     // Bu yerda conversation ni bot.use orqali nom bilan ro'yxatga olish kerak
@@ -74,11 +80,11 @@ export class TelegramService implements OnModuleInit {
     //   course: course.message.text,
     // });
     //
-    // this.applyService.saveApplication({
-    //   name: name.message.text,
-    //   phone: phone.message.text,
-    //   course: course.message.text,
-    // });
+    this.applyService.saveApplication({
+      name: name.message.text,
+      phone: phone.message.text,
+      course: course.message.text,
+    });
     await ctx.reply(
       `✅ Arizangiz qabul qilindi:\n👤 Ism: ${name.message.text}\n📞 Telefon: ${phone.message.text}\n📘 Kurs: ${course.message.text}`,
     );
