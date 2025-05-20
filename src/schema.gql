@@ -22,23 +22,32 @@ type Teacher {
   diploma: String!
 }
 
+type Application {
+  id: String!
+  name: String!
+  address: String!
+  phone: String!
+}
+
 type Query {
   teachers: [Teacher!]!
   teacher(id: Int!): Teacher!
+  application: [Application!]!
 }
 
 type Mutation {
   createTeacher(createTeacherInput: CreateTeacherInput!): Teacher!
   updateTeacher(updateTeacherInput: UpdateTeacherInput!): Teacher!
   removeTeacher(id: Int!): Teacher!
+  createApplication(createApplicationInput: CreateApplicationInput!): Application!
 }
 
 input CreateTeacherInput {
   """ismi"""
-  name: String
+  name: String!
 
   """email"""
-  email: String!
+  email: String
 
   """phone number"""
   phoneNumber: String
@@ -47,7 +56,7 @@ input CreateTeacherInput {
   experience: String!
 
   """diplommi"""
-  diploma: String!
+  diploma: String
 }
 
 input UpdateTeacherInput {
@@ -65,4 +74,11 @@ input UpdateTeacherInput {
 
   """diplommi"""
   diploma: String
+}
+
+input CreateApplicationInput {
+  """Example field (placeholder)"""
+  name: String!
+  address: String!
+  phone: String!
 }

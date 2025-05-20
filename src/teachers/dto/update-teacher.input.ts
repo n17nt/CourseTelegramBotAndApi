@@ -1,5 +1,5 @@
 import { CreateTeacherInput } from './create-teacher.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { InputType, PartialType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateTeacherInput extends PartialType(CreateTeacherInput) {
@@ -16,4 +16,3 @@ export class UpdateTeacherInput extends PartialType(CreateTeacherInput) {
   // @Field(() => String, { description: 'diplommi' })
   // diploma?: string;
 }
-

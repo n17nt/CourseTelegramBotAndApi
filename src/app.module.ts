@@ -1,12 +1,13 @@
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TelegramModule } from './telegram/telegram.module';
-import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TeacherModel } from './teachers/entities/teacher.entity';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { TeachersModule } from './teachers/teachers.module';
+import { ApplicationModule } from './application/application.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { TeachersModule } from './teachers/teachers.module';
     }),
     TelegramModule,
     TeachersModule,
+    ApplicationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
