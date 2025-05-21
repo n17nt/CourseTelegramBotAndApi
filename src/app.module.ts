@@ -9,6 +9,8 @@ import { TeacherModel } from './teachers/entities/teacher.entity';
 import { TeachersModule } from './teachers/teachers.module';
 import { ApplicationModule } from './application/application.module';
 import { ProjectInfoModule } from './project-info/project-info.module';
+import { CoursesModule } from './courses/courses.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { ProjectInfoModule } from './project-info/project-info.module';
     TeachersModule,
     ApplicationModule,
     ProjectInfoModule,
+    CoursesModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

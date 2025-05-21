@@ -36,11 +36,46 @@ type ProjectInfo {
   courseName: String!
 }
 
+type CategoryModel {
+  """Unique identifier for the category"""
+  id: ID!
+
+  """Name of the category"""
+  categoryName: String!
+
+  """Description of the category"""
+  description: String!
+}
+
+type CourseModel {
+  """Unique identifier for the course"""
+  id: Int!
+
+  """Name of the course"""
+  courseName: String!
+
+  """Description of the course"""
+  courseDescription: String!
+
+  """Duration of the course"""
+  duration: String!
+
+  """Price of the course"""
+  price: Float!
+
+  """Categories this course belongs to"""
+  category: CategoryModel
+}
+
 type Query {
   application: [Application!]!
   teachers: [Teacher!]!
   teacher(id: Int!): Teacher!
   projectInfo: [ProjectInfo!]!
+  courses: [CourseModel!]!
+  course(id: Int!): CourseModel!
+  categories: [CategoryModel!]!
+  category(id: Int!): CategoryModel!
 }
 
 type Mutation {
@@ -49,6 +84,12 @@ type Mutation {
   updateTeacher(updateTeacherInput: UpdateTeacherInput!): Teacher!
   removeTeacher(id: Int!): Teacher!
   createProjectInfo(createProjectInfoInput: CreateProjectInfoInput!): ProjectInfo!
+  createCourse(createCourseInput: CreateCourseInput!): CourseModel!
+  updateCourse(updateCourseInput: UpdateCourseInput!, id: Float!): CourseModel!
+  removeCourse(id: Int!): CourseModel!
+  createCategory(createCategoryInput: CreateCategoryInput!): CategoryModel!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): CategoryModel!
+  removeCategory(id: Int!): CategoryModel!
 }
 
 input CreateApplicationInput {
@@ -96,4 +137,62 @@ input CreateProjectInfoInput {
   fullname: String!
   phone: String!
   courseName: String!
+}
+
+input CreateCourseInput {
+  """Name of the course"""
+  courseName: String!
+
+  """Description of the course"""
+  courseDescription: String!
+
+  """Duration of the course"""
+  duration: String!
+
+  """Price of the course"""
+  price: Float!
+
+  """Price of the course"""
+  category_id: Int!
+}
+
+input UpdateCourseInput {
+  """Name of the course"""
+  courseName: String
+
+  """Description of the course"""
+  courseDescription: String
+
+  """Duration of the course"""
+  duration: String
+
+  """Price of the course"""
+  price: Float
+
+  """Price of the course"""
+  category_id: Int
+  id: Int!
+}
+
+input CreateCategoryInput {
+  """Name of the category"""
+  categoryName: String!
+
+  """Description of the category"""
+  description: String!
+
+  """IDs of the courses under this category"""
+  courseIds: [Float!]
+}
+
+input UpdateCategoryInput {
+  """Name of the category"""
+  categoryName: String
+
+  """Description of the category"""
+  description: String
+
+  """IDs of the courses under this category"""
+  courseIds: [Float!]
+  id: Int!
 }
